@@ -11,6 +11,7 @@ model.Base.metadata.create_all(engine)
 
 def getDb():
     db = SessionLocal()
+    # SQLAlchemy has a connection pooling mechanism for default.That meand with yield you are creating a single session for each request .  return --> using single database connection for all your app
     try:
         yield db
     finally:
@@ -48,7 +49,9 @@ def create_address(req: schemas.Address, res:Response, db :Session = Depends(get
 
         # adding column to table
         db.add(newAddress)
+        # method used to confirm the changes by userto database
         db.commit()
+        #refresh the window with new address
         db.refresh(newAddress)
 
         return {
@@ -128,7 +131,7 @@ def get_nearest_address(res: Response, name, addressLine, city, state, db :Sessi
         }
 
 
-
+# update the address with id 
 
 @app.put("/updateAddress/{id}", status_code=status.HTTP_202_ACCEPTED)
 def update_address(id, req: schemas.Address, res: Response, db: Session = Depends(getDb)):
@@ -140,7 +143,7 @@ def update_address(id, req: schemas.Address, res: Response, db: Session = Depend
         state = req.state.strip()
         pincode = req.pincode
 
-    
+        # using getcoordinate function from grt_coordinate file to update the changes 
         locationData = getCoordinate(name, addressLine, city, state)
 
         newAddress = {
@@ -165,7 +168,7 @@ def update_address(id, req: schemas.Address, res: Response, db: Session = Depend
                 "status" : "failed",
                 "msg" : f"Address id {id} not found"
             }
-
+         # method used to confirm the changes by userto database
         db.commit()
 
         # if the data got sucessfully updated 
@@ -196,7 +199,7 @@ def delete_address(id, res: Response, db: Session = Depends(getDb) ):
                 "status" : "failed",
                 "msg" : f"Address id {id} not found"
             }
-        
+        # method used to confirm the changes by userto database
         db.commit()
 
        

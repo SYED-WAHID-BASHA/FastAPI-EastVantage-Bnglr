@@ -13,4 +13,5 @@ engine = create_engine(
 
 SessionLocal = sessionmaker( autoflush=False,bind=engine, autocommit=False )
 
+# it is a factory function that constructs a base class for declarative class definitions.
 Base = declarative_base()

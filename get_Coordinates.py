@@ -1,6 +1,6 @@
 import requests
 
-# api fot coordinates
+# api for getting coordinates
 
 # API Secret Key
 coordinateApiKey = "eblFYOGlOuT92AtjjJRE4WiznNh81GGM"

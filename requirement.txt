@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+requests
+sqlalchemy
+sessionmaker
+Session
+pydantic
+geopy
+environment variables
